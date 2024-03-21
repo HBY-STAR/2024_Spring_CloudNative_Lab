@@ -11,9 +11,11 @@ import org.fd.ase.grp15.common.iservice.IConferenceService;
 import org.fd.ase.grp15.common.iservice.IUserConferenceRoleService;
 import org.fd.ase.grp15.common.iservice.conference.dto.ConferenceDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.text.SimpleDateFormat;
@@ -30,7 +32,7 @@ public class ContributeServiceImpl {
     @DubboReference(check = false)
     private IConferenceService conferenceService;
 
-    private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private final DateTimeFormatter dff = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     public String contribute(ContributeRequest.In in) {
         // TODO
@@ -48,7 +50,7 @@ public class ContributeServiceImpl {
             else if (!conference.getConferenceStatus().equals("投稿中")){
                 return "会议未在投稿阶段";
             }
-            else if (!LocalDateTime.now().isBefore(conference.getSubmissionDeadline())){
+            else if (LocalDateTime.now().isAfter(conference.getSubmissionDeadline())){
                 return "会议投稿已截止";
             }
             //为用户添加Author身份
@@ -62,7 +64,7 @@ public class ContributeServiceImpl {
             contribution.setTitle(in.getTitle());
             contribution.setAbstractContent(in.getAbstractContent());
             contribution.setEssayId(in.getEssayId());
-            contribution.setContributeTime(sdf.format(LocalDateTime.now()));
+            contribution.setContributeTime(LocalDateTime.now().format(dff));
             contribution.setStatus(0);
             contributeRepository.save(contribution);
 
