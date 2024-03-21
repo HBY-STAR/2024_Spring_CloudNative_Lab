@@ -17,4 +17,7 @@
 3. windows 下可以通过 git bash 运行脚本。
 4. 第一次运行中间件以及服务（即那两个脚本）时，尽量挂梯子。
 5. 运行中间件时，若仅naco运行失败，可能是本地的mysql占用了3306端口，需要关闭本地mysql进程
-6. 已添加IDEA的运行配置到./run下，打开IDEA应该能直接看见配置AseContributeServiceApplication。运行前需要先运行中间件，经测试可以正常运行。
+6. 已添加IDEA的运行配置到./run下，打开IDEA应该能在右上角看见配置AseContributeServiceApplication，直接运行即可。运行前需要先运行中间件，经测试可以正常运行。
+![img.png](image/img1.png)
+7. IDEA点击右侧的maven图标出现下图所示界面，点击clean可清除target目录下的jar包，点击install可重新打包。
+![img.png](image/img.png)
