@@ -48,7 +48,7 @@ public class ContributeServiceImpl {
             else if (!conference.getConferenceStatus().equals("投稿中")){
                 return "会议未在投稿阶段";
             }
-            else if (LocalDateTime.now().isBefore(conference.getSubmissionDeadline())){
+            else if (!LocalDateTime.now().isBefore(conference.getSubmissionDeadline())){
                 return "会议投稿已截止";
             }
             //为用户添加Author身份
