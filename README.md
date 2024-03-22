@@ -21,3 +21,4 @@
 ![img.png](image/img1.png)
 7. IDEA点击右侧的maven图标出现下图所示界面，点击clean可清除target目录下的jar包，点击install可重新打包。
 ![img.png](image/img.png)
+8. 项目根目录下运行 ```docker compose up -d```可一键启动中间件以及除投稿外的其他服务。
