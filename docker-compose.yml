@@ -1,6 +1,26 @@
 version: '3'
 services:
   # services
+  ase_contribute_service:
+    build:
+        context: .
+        dockerfile: ase_contribute_service/Dockerfile
+    image: ase_contribute_service
+    container_name: ase_contribute_service
+    environment:
+      - env=prod
+      - NACOS_HOST=host.docker.internal
+      - MYSQL_HOST=host.docker.internal
+      - REDIS_HOST=host.docker.internal
+    networks:
+      - ase-network
+    depends_on:
+      - redis
+      - mysql-8.0
+      - nacos
+      - mysql
+    restart: no
+
   ase-conference-service:
     image: huajuan6848/ase_conference_service:yys-lab1
     container_name: ase-conference-service
