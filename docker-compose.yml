@@ -5,7 +5,7 @@ services:
     build:
         context: .
         dockerfile: ase_contribute_service/Dockerfile
-    image: ase_contribute_service
+    image: hby925/ase_contribute_service
     container_name: ase_contribute_service
     environment:
       - env=prod
@@ -85,6 +85,8 @@ services:
       - REDIS_HOST=host.docker.internal
     networks:
       - ase-network
+    volumes:
+      - ./yys/PaperFile:/root/upload
     depends_on:
       - redis
       - mysql-8.0
