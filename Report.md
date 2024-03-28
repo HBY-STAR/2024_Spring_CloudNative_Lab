@@ -16,11 +16,9 @@
 
 ## （2）Docker Hub 镜像地址
 
-hby925/ase_contribute_service
+mcconter/yys_lab
 
-可运行：
-```docker push hby925/ase_contribute_service:latest```
-获取
+
 
 ------
 
@@ -52,7 +50,10 @@ hby925/ase_contribute_service
 
 ### 任务2:
 
-TODO
+1. 注册Docker Hub账号，创建Repository。
+2. 熟悉Dockerfile指令，进行Dockerfile编写与多阶段构建。
+3. 构建并运行镜像，对镜像进行测试。
+4. 将镜像推送到Docker Hub。
 
 ### 任务3:
 
@@ -79,6 +80,6 @@ TODO
 
 &emsp;
 * 路明畅：
-
+通过本次实践，学习了对Dockerfile的编写，并理解了多阶段构建的重要性，加深我了对Docker容器化技术的整体理解。
 
 &emsp;
