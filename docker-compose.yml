@@ -4,7 +4,7 @@ services:
   ase_contribute_service:
     build:
         context: .
-        dockerfile: ase_contribute_service/Dockerfile_by_hby
+        dockerfile: ase_contribute_service/Dockerfile
     image: hby925/ase_contribute_service
     container_name: ase_contribute_service
     environment:

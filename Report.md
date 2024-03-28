@@ -16,7 +16,9 @@
 
 ## （2）Docker Hub 镜像地址
 
-mcconter/yys_lab
+hby925/ase_contribute_service
+
+```docker pull hby925/ase_contribute_service```
 
 
 
