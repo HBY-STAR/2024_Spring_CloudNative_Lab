@@ -74,7 +74,7 @@ hby925/ase_contribute_service
 
 &emsp;
 * 臧佳俊：
-
+通过本次实践，了解了docker的基本用法，还有docker构建镜像并运行的过程，感受到了使用docker容器进行开发的高效性，但是仍有很多不足需要学习。
 
 &emsp;
 * 梁宇锋：
