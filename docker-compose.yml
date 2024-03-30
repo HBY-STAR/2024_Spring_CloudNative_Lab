@@ -14,11 +14,11 @@ services:
       - REDIS_HOST=host.docker.internal
     networks:
       - ase-network
-    depends_on:
-      - redis
-      - mysql-8.0
-      - nacos
-      - mysql
+#    depends_on:
+#      - redis
+#      - mysql-8.0
+#      - nacos
+#      - mysql
     restart: no
 
   ase-conference-service:
@@ -34,11 +34,11 @@ services:
       - REDIS_PORT=6379
     networks:
       - ase-network
-    depends_on:
-      - redis
-      - mysql-8.0
-      - nacos
-      - mysql
+#    depends_on:
+#      - redis
+#      - mysql-8.0
+#      - nacos
+#      - mysql
     restart: no
 
   ase-notification-service:
@@ -51,11 +51,11 @@ services:
       - REDIS_HOST=host.docker.internal
     networks:
       - ase-network
-    depends_on:
-      - redis
-      - mysql-8.0
-      - nacos
-      - mysql
+#    depends_on:
+#      - redis
+#      - mysql-8.0
+#      - nacos
+#      - mysql
     restart: no
 
   ase-user-service:
@@ -68,11 +68,11 @@ services:
       - REDIS_HOST=host.docker.internal
     networks:
       - ase-network
-    depends_on:
-      - redis
-      - mysql-8.0
-      - nacos
-      - mysql
+#    depends_on:
+#      - redis
+#      - mysql-8.0
+#      - nacos
+#      - mysql
     restart: no
 
   ase-file-service:
@@ -87,11 +87,11 @@ services:
       - ase-network
     volumes:
       - ./yys/PaperFile:/root/upload
-    depends_on:
-      - redis
-      - mysql-8.0
-      - nacos
-      - mysql
+#    depends_on:
+#      - redis
+#      - mysql-8.0
+#      - nacos
+#      - mysql
     restart: no
 
   ase-gateway:
@@ -104,12 +104,12 @@ services:
       - REDIS_HOST=host.docker.internal
     networks:
       - ase-network
-      - nacos-docker_default
-    depends_on:
-      - redis
-      - mysql-8.0
-      - nacos
-      - mysql
+#      - nacos-docker_default
+#    depends_on:
+#      - redis
+#      - mysql-8.0
+#      - nacos
+#      - mysql
     restart: on-failure
 
   ase-frontend:
@@ -124,98 +124,98 @@ services:
       - "80:80"
     networks:
       - ase-network
-    depends_on:
-      - redis
-      - mysql-8.0
-      - nacos
-      - mysql
+#    depends_on:
+#      - redis
+#      - mysql-8.0
+#      - nacos
+#      - mysql
     restart: no
 
 
   # middlewares
-  redis:
-    image: redis:6.2
-    container_name: my-redis
-    ports:
-      - "6379:6379"
-    volumes:
-      - redis-data:/data  # 将 Redis 数据目录挂载到名为 "redis-data" 的数据卷
-      - ./yys/lab1/middlewares/redis-docker/redis.conf:/usr/local/etc/redis/redis.conf  # 将自定义的配置文件挂载到容器中
-    command: redis-server /usr/local/etc/redis/redis.conf  # 指定配置文件
-    restart: always
-    networks:
-      - redis-docker_default
-
-  mysql-8.0:
-    image: mysql:8.0.34
-    container_name: mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: 4iKqWz0dasVpC0z4EQUK
-    volumes:
-      - main-mysql-data:/var/lib/mysql
-    ports:
-      - "13306:3306"
-    restart: always
-    networks:
-      - mysql-docker_default
-
-  startup-sql-runner:
-    image: mysql:8.0.34
-    container_name: startup-sql-runner
-    depends_on:
-      - mysql
-    restart: "no"
-    volumes:
-      - ./yys/lab1/middlewares/mysql-docker/init.sql:/docker-entrypoint-initdb.d/init.sql
-    command: [ "bash", "-c", "sleep 10 && mysql -h mysql -uroot -p4iKqWz0dasVpC0z4EQUK < /docker-entrypoint-initdb.d/init.sql" ]
-    networks:
-      - mysql-docker_default
-
-  nacos:
-    image: nacos/nacos-server:v2.3.0-slim
-    container_name: nacos-standalone-mysql
-    env_file:
-      - ./yys/lab1/middlewares/nacos-docker/env/nacos-standlone-mysql.env
-    volumes:
-      - nacos-standalone-logs:/home/nacos/logs
-    ports:
-      - "8848:8848"
-      - "9848:9848"
-    depends_on:
-      mysql:
-        condition: service_healthy
-    restart: no
-    networks:
-      - nacos-docker_default
-
-  mysql:
-    container_name: mysql-nacos
-    build:
-      context: .
-      dockerfile: ./yys/lab1/middlewares/nacos-docker/nacos-docker/image/mysql/8/Dockerfile
-    image: example/mysql:8.0.30
-    env_file:
-      - ./yys/lab1/middlewares/nacos-docker/env/mysql.env
-    volumes:
-      - nacos-mysql-data:/var/lib/mysql
-    ports:
-      - "3306:3306"
-    healthcheck:
-      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
-      interval: 5s
-      timeout: 10s
-      retries: 10
-    restart: no
-    networks:
-      - nacos-docker_default
-volumes:
-  redis-data:
-  main-mysql-data:
-  nacos-standalone-logs:
-  nacos-mysql-data:
+#  redis:
+#    image: redis:6.2
+#    container_name: my-redis
+#    ports:
+#      - "6379:6379"
+#    volumes:
+#      - redis-data:/data  # 将 Redis 数据目录挂载到名为 "redis-data" 的数据卷
+#      - ./yys/lab1/middlewares/redis-docker/redis.conf:/usr/local/etc/redis/redis.conf  # 将自定义的配置文件挂载到容器中
+#    command: redis-server /usr/local/etc/redis/redis.conf  # 指定配置文件
+#    restart: always
+#    networks:
+#      - redis-docker_default
+#
+#  mysql-8.0:
+#    image: mysql:8.0.34
+#    container_name: mysql
+#    environment:
+#      MYSQL_ROOT_PASSWORD: 4iKqWz0dasVpC0z4EQUK
+#    volumes:
+#      - main-mysql-data:/var/lib/mysql
+#    ports:
+#      - "13306:3306"
+#    restart: always
+#    networks:
+#      - mysql-docker_default
+#
+#  startup-sql-runner:
+#    image: mysql:8.0.34
+#    container_name: startup-sql-runner
+#    depends_on:
+#      - mysql
+#    restart: "no"
+#    volumes:
+#      - ./yys/lab1/middlewares/mysql-docker/init.sql:/docker-entrypoint-initdb.d/init.sql
+#    command: [ "bash", "-c", "sleep 10 && mysql -h mysql -uroot -p4iKqWz0dasVpC0z4EQUK < /docker-entrypoint-initdb.d/init.sql" ]
+#    networks:
+#      - mysql-docker_default
+#
+#  nacos:
+#    image: nacos/nacos-server:v2.3.0-slim
+#    container_name: nacos-standalone-mysql
+#    env_file:
+#      - ./yys/lab1/middlewares/nacos-docker/env/nacos-standlone-mysql.env
+#    volumes:
+#      - nacos-standalone-logs:/home/nacos/logs
+#    ports:
+#      - "8848:8848"
+#      - "9848:9848"
+#    depends_on:
+#      mysql:
+#        condition: service_healthy
+#    restart: no
+#    networks:
+#      - nacos-docker_default
+#
+#  mysql:
+#    container_name: mysql-nacos
+#    build:
+#      context: .
+#      dockerfile: ./yys/lab1/middlewares/nacos-docker/nacos-docker/image/mysql/8/Dockerfile
+#    image: example/mysql:8.0.30
+#    env_file:
+#      - ./yys/lab1/middlewares/nacos-docker/env/mysql.env
+#    volumes:
+#      - nacos-mysql-data:/var/lib/mysql
+#    ports:
+#      - "3306:3306"
+#    healthcheck:
+#      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+#      interval: 5s
+#      timeout: 10s
+#      retries: 10
+#    restart: no
+#    networks:
+#      - nacos-docker_default
+#volumes:
+#  redis-data:
+#  main-mysql-data:
+#  nacos-standalone-logs:
+#  nacos-mysql-data:
 
 networks:
   ase-network:
-  mysql-docker_default:
-  redis-docker_default:
-  nacos-docker_default:
+#  mysql-docker_default:
+#  redis-docker_default:
+#  nacos-docker_default:
