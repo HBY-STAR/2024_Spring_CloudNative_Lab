@@ -1,0 +1,8 @@
+FROM node:16.20.2-buster as build-stage
+WORKDIR /app
+COPY . /app/
+RUN npm install && npm run build
+
+FROM nginx:1.21.3-alpine as production-stage
+COPY --from=build-stage /app/dist /usr/share/nginx/html
+EXPOSE 80

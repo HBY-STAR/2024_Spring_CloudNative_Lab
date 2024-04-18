@@ -1,0 +1,28 @@
+server:
+  port: 8084
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${MYSQL_HOST:mysql.lab2-middlewares.svc.cluster.local}:${MYSQL_PORT:3306}/ase_contribute_service_dev
+    username: ${MYSQL_USER:root}
+    password: ${MYSQL_PASSWORD:4iKqWz0dasVpC0z4EQUK}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQLDialect
+    show-sql: true
+  application:
+    name: ase-contribute-service
+dubbo:
+  application:
+    name: ase-contribute-service
+    qos-enable: false
+    serialize-check-status: WARN
+  protocol:
+    name: tri
+    port: 20884
+  registry:
+    address: N/A
+  consumer:
+    timeout: 30000
+    mesh-enable: true

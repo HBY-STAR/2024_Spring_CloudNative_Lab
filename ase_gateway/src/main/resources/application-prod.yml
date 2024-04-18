@@ -1,0 +1,43 @@
+spring:
+  main:
+    web-application-type: reactive
+  application:
+    name: ase-gateway
+  cloud:
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOriginPatterns: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+            allowCredentials: true
+        add-to-simple-url-handler-mapping: true
+      loadbalancer:
+        use404: true # 如果找不到服务，就返回404(默认是503)
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: user_service_route
+          uri: http://ase-user-service.lab2-services.svc.cluster.local:8081
+          predicates:
+            - Path=/user/**
+        - id: notification_service_route
+          uri: http://ase-notification-service.lab2-services.svc.cluster.local:8082
+          predicates:
+            - Path=/notification/**
+        - id: conference_service_route
+          uri: http://ase-conference-service.lab2-services.svc.cluster.local:8083
+          predicates:
+            - Path=/conference/**
+        - id: contribute_service_route
+          uri: http://ase-contribute-service.lab2-services.svc.cluster.local:8084
+          predicates:
+            - Path=/contribute/**
+        - id: file_service_route
+          uri: http://ase-file-service.lab2-services.svc.cluster.local:8085
+          predicates:
+            - Path=/file/**
+server:
+  port: 8080

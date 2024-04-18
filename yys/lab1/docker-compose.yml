@@ -1,0 +1,60 @@
+version: '3'
+services:
+  ase-conference-service:
+    image: huajuan6848/ase_conference_service:yys-lab1
+    networks:
+      - ase-network
+    environment:
+      - env=prod
+      # 如果这些中间件不运行在本地(e.g 四人小组在一台服务器上运行了这些中间件)，则需要设置这些环境变量
+      - NACOS_HOST=host.docker.internal
+      - NACOS_PORT=8848
+      - MYSQL_HOST=host.docker.internal
+      - MYSQL_PORT=13306
+      - REDIS_HOST=host.docker.internal
+      - REDIS_PORT=6379
+  ase-notification-service:
+    image: huajuan6848/ase_notification_service:yys-lab1
+    networks:
+      - ase-network
+    environment:
+      - env=prod
+      - NACOS_HOST=host.docker.internal
+      - MYSQL_HOST=host.docker.internal
+      - REDIS_HOST=host.docker.internal
+  ase-user-service:
+    image: huajuan6848/ase_user_service:yys-lab1
+    networks:
+      - ase-network
+    environment:
+      - env=prod
+      - NACOS_HOST=host.docker.internal
+      - MYSQL_HOST=host.docker.internal
+      - REDIS_HOST=host.docker.internal
+  ase-file-service:
+    image: huajuan6848/ase_file_service:yys-lab1
+    networks:
+      - ase-network
+    environment:
+      - env=prod
+      - NACOS_HOST=host.docker.internal
+      - MYSQL_HOST=host.docker.internal
+      - REDIS_HOST=host.docker.internal
+  ase-gateway:
+    image: huajuan6848/ase_gateway:yys-lab1
+    networks:
+      - ase-network
+    environment:
+      - env=prod
+      - NACOS_HOST=host.docker.internal
+      - MYSQL_HOST=host.docker.internal
+      - REDIS_HOST=host.docker.internal
+  ase-frontend:
+    image: huajuan6848/ase_frontend:yys-lab1
+    networks:
+      - ase-network
+    ports:
+      - "80:80"
+networks:
+  ase-network:
+    driver: bridge

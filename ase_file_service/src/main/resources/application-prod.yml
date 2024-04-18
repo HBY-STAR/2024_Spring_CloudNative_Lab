@@ -1,0 +1,10 @@
+server:
+  port: 8085
+spring:
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+  application:
+    name: ase-file-service
+  servlet:
+    multipart:
+      max-file-size: 20MB
