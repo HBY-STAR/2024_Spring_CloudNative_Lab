@@ -8,3 +8,13 @@
 4. 侯斌洋：Helm
 
 ddl: 5.1晚上
+
+## 2. cmd
+
+```shell
+cd k8s_yaml
+kubectl apply -f lab2-middlewares.yaml
+kubectl apply -f lab2-services.yaml
+
+kubectl apply -f lab2-ingress.yaml
+```

@@ -1,0 +1,57 @@
+# TODO
+# 未进行负载均衡
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: lab2-ingress
+  namespace: lab2-services
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: nginx
+  rules:
+    - http:
+        paths:
+          - pathType: Prefix
+            path: "/api/user(/|$)(.*)"
+            backend:
+              service:
+                name: ase-user-service
+                port:
+                  number: 8081
+          - pathType: Prefix
+            path: "/api/notification(/|$)(.*)"
+            backend:
+              service:
+                name: ase-notification-service
+                port:
+                  number: 8082
+          - pathType: Prefix
+            path: "/api/conference(/|$)(.*)"
+            backend:
+              service:
+                name: ase-conference-service
+                port:
+                  number: 8083
+          - pathType: Prefix
+            path: "/api/contribute(/|$)(.*)"
+            backend:
+              service:
+                name: ase-contribute-service
+                port:
+                  number: 8084
+          - pathType: Prefix
+            path: "/api/file(/|$)(.*)"
+            backend:
+              service:
+                name: ase-file-service
+                port:
+                  number: 8085
+          - pathType: Prefix
+            path: "/(.*)"
+            backend:
+              service:
+                name: ase-frontend
+                port:
+                  number: 80
