@@ -10,14 +10,35 @@
 ddl: 5.1晚上
 
 ## 2. 运行
+
 ```shell
 minikube start --driver=docker --image-mirror-country=cn --kubernetes-version=v1.28.3 --memory=6144 --cni=flannel
-kubectl apply -f k8s_yaml # 报错则多试几次，初次安装ingress-controller需要代理
+kubectl apply -f k8s_middlewares # 报错则多试几次，初次安装ingress-controller需要代理
+kubectl apply -f k8s_services
 kubectl get pods -A # 获取所有节点，等待所有节点状态为completed或running
 kubectl port-forward svc/ingress-nginx-controller -n ingress-nginx 80:80 # 端口映射，之后浏览器停用缓存且访问http://localhost:80即可运行。
+```
 
+or 
+
+```shell
+minikube start --driver=docker --image-mirror-country=cn --kubernetes-version=v1.28.3 --memory=6144 --cni=flannel
+kubectl apply -f k8s_all # 报错则多试几次，初次安装ingress-controller需要代理
+kubectl get pods -A
+kubectl port-forward svc/ingress-nginx-controller -n ingress-nginx 80:80
+```
+
+or
+
+```shell
+minikube start --driver=docker --image-mirror-country=cn --kubernetes-version=v1.28.3 --memory=6144 --cni=flannel
+kubectl apply -f k8s_middlewares # 报错则多试几次，初次安装ingress-controller需要代理
+helm install lab2-chart-0.1.0 ./lab2-chart-0.1.0.tgz
+kubectl port-forward svc/ingress-nginx-controller -n ingress-nginx 80:80
 ```
 
 ## 3.TODO
 
-1. helm chart整合
+All Done.
+
+report left
