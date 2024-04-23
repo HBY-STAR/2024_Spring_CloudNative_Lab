@@ -11,7 +11,7 @@ metadata:
   namespace: lab2-middlewares
 spec:
   capacity:
-    storage: 1Gi
+    storage: 500Mi
   volumeMode: Filesystem
   accessModes:
     - ReadWriteOnce
@@ -78,7 +78,7 @@ spec:
         accessModes: ["ReadWriteOnce"]
         resources:
           requests:
-            storage: 1Gi
+            storage: 500Mi
 ---
 apiVersion: v1
 kind: Service
@@ -101,7 +101,7 @@ metadata:
   namespace: lab2-middlewares
 spec:
   capacity:
-    storage: 1Gi
+    storage: 500Mi
   volumeMode: Filesystem
   accessModes:
     - ReadWriteOnce
@@ -170,7 +170,7 @@ spec:
         accessModes: ["ReadWriteOnce"]
         resources:
           requests:
-            storage: 1Gi
+            storage: 500Mi
 
 ---
 apiVersion: v1
