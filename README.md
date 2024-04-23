@@ -11,5 +11,6 @@ ddl: 5.1晚上
 
 ## 2. 运行
 ```shell
+minikube start --driver=docker --image-mirror-country=cn --kubernetes-version=v1.28.3 --memory=6144
 kubectl apply -f k8s_yaml
 ```

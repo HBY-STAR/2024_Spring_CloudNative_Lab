@@ -9,8 +9,8 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(level
 logger = logging.getLogger(__name__)
 
 # 根据实际情况修改成自己的用户名和密码
-TEST_USERNAME = 'user1'
-TEST_PASSWORD = 'a123456'
+TEST_USERNAME = 'hby_star'
+TEST_PASSWORD = 'HBy20030925'
 
 # 请根据实际情况修改BASE_URL
 BASE_URL = 'http://localhost:8080'
