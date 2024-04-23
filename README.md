@@ -17,3 +17,9 @@ kubectl get pods -A # 获取所有节点，等待所有节点状态为completed�
 kubectl port-forward svc/ingress-nginx-controller -n ingress-nginx 80:80 # 端口映射，之后浏览器停用缓存且访问http://localhost:80即可运行。
 
 ```
+
+## 3.TODO
+
+1. file服务应挂载到local pv
+2. ingress暂未实现load balance
+3. helm chart整合
