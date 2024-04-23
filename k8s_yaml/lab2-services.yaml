@@ -98,7 +98,7 @@ metadata:
   name: ase-conference-service
   namespace: lab2-services
 spec:
-  replicas: 1
+  replicas: 4
   selector:
     matchLabels:
       app: ase-conference-service
@@ -209,10 +209,9 @@ spec:
       volumes:
         - name: upload-data
           hostPath:
-            path: /ase-file/upload
-      # TODO 挂载到local卷上
-      # nodeSelector:
-      # kubernetes.io/hostname: minikube
+            path: /mnt/disks/ase_file_upload
+      nodeSelector:
+        kubernetes.io/hostname: minikube
 ---
 apiVersion: v1
 kind: Service
