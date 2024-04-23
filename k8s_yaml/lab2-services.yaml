@@ -233,6 +233,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ase-frontend
+  namespace: lab2-services
 spec:
   replicas: 1
   selector:
@@ -253,6 +254,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ase-frontend
+  namespace: lab2-services
 spec:
   selector:
     app: ase-frontend
@@ -266,6 +268,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: service-config
+  namespace: lab2-services
 data:
   env: "prod"
   MYSQL_HOST: "mysql.lab2-middlewares.svc.cluster.local"
