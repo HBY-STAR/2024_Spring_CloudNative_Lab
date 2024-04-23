@@ -9,12 +9,7 @@
 
 ddl: 5.1晚上
 
-## 2. cmd
-
+## 2. 运行
 ```shell
-cd k8s_yaml
-kubectl apply -f lab2-middlewares.yaml
-kubectl apply -f lab2-services.yaml
-
-kubectl apply -f lab2-ingress.yaml
+kubectl apply -f k8s_yaml
 ```
