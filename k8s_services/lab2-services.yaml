@@ -1,0 +1,278 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: lab2-services
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ase-user-service
+  namespace: lab2-services
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ase-user-service
+  template:
+    metadata:
+      labels:
+        app: ase-user-service
+    spec:
+      containers:
+        - name: ase-user-service
+          image: huajuan6848/ase_user_service:yys-lab2
+          ports:
+            - containerPort: 8081
+            - containerPort: 20881
+          envFrom:
+            - configMapRef:
+                name: service-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ase-user-service
+  namespace: lab2-services
+spec:
+  selector:
+    app: ase-user-service
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8081
+      targetPort: 8081
+    - name: rpc
+      protocol: TCP
+      port: 20881
+      targetPort: 20881
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ase-notification-service
+  namespace: lab2-services
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ase-notification-service
+  template:
+    metadata:
+      labels:
+        app: ase-notification-service
+    spec:
+      containers:
+        - name: ase-notification-service
+          image: huajuan6848/ase_notification_service:yys-lab2
+          ports:
+            - containerPort: 8082
+            - containerPort: 20882
+          envFrom:
+            - configMapRef:
+                name: service-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ase-notification-service
+  namespace: lab2-services
+spec:
+  selector:
+    app: ase-notification-service
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8082
+      targetPort: 8082
+    - name: rpc
+      protocol: TCP
+      port: 20882
+      targetPort: 20882
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ase-conference-service
+  namespace: lab2-services
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: ase-conference-service
+  template:
+    metadata:
+      labels:
+        app: ase-conference-service
+    spec:
+      containers:
+        - name: ase-conference-service
+          image: huajuan6848/ase_conference_service:yys-lab2
+          ports:
+            - containerPort: 8083
+            - containerPort: 20883
+          envFrom:
+            - configMapRef:
+                name: service-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ase-conference-service
+  namespace: lab2-services
+spec:
+  selector:
+    app: ase-conference-service
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8083
+      targetPort: 8083
+    - name: rpc
+      protocol: TCP
+      port: 20883
+      targetPort: 20883
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ase-contribute-service
+  namespace: lab2-services
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ase-contribute-service
+  template:
+    metadata:
+      labels:
+        app: ase-contribute-service
+    spec:
+      containers:
+        - name: ase-contribute-service
+          image: huajuan6848/ase_contribute_service:yys-lab2
+          ports:
+            - containerPort: 8084
+            - containerPort: 20884
+          envFrom:
+            - configMapRef:
+                name: service-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ase-contribute-service
+  namespace: lab2-services
+spec:
+  selector:
+    app: ase-contribute-service
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8084
+      targetPort: 8084
+    - name: rpc
+      protocol: TCP
+      port: 20884
+      targetPort: 20884
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ase-file-service
+  namespace: lab2-services
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ase-file-service
+  template:
+    metadata:
+      labels:
+        app: ase-file-service
+    spec:
+      containers:
+        - name: ase-file-service
+          image: huajuan6848/ase_file_service:yys-lab2
+          ports:
+            - containerPort: 8085
+          volumeMounts:
+            - name: upload-data
+              mountPath: /root/upload
+          envFrom:
+            - configMapRef:
+                name: service-config
+      volumes:
+        - name: upload-data
+          hostPath:
+            path: /mnt/disks/ase_file_upload
+      nodeSelector:
+        kubernetes.io/hostname: minikube
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ase-file-service
+  namespace: lab2-services
+spec:
+  selector:
+    app: ase-file-service
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8085
+      targetPort: 8085
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ase-frontend
+  namespace: lab2-services
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ase-frontend
+  template:
+    metadata:
+      labels:
+        app: ase-frontend
+    spec:
+      containers:
+        - name: ase-frontend
+          image: huajuan6848/ase_frontend:yys-lab2
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ase-frontend
+  namespace: lab2-services
+spec:
+  selector:
+    app: ase-frontend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: service-config
+  namespace: lab2-services
+data:
+  env: "prod"
+  MYSQL_HOST: "mysql.lab2-middlewares.svc.cluster.local"
+  MYSQL_PORT: "3306"
+  MYSQL_USER: "root"
+  MYSQL_PASSWORD: "root"
+  REDIS_HOST: "redis.lab2-middlewares.svc.cluster.local"
+  REDIS_PORT: "6379"
