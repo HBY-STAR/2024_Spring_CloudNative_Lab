@@ -262,9 +262,14 @@ minikube start --driver=docker --image-mirror-country=cn --kubernetes-version=v1
 
 > 
 
-### 6.3 梁宇峰
+### 6.3 梁宇锋
 
-> 
+> 通过完成部署四个服务的工作，我学到了如何使用 Kubernetes 进行容器化应用部署。关键的收获包括：
+
+命名空间的利用：命名空间有助于管理和隔离不同的项目，提高了资源管理的清晰度。
+配置管理的灵活性：使用 ConfigMap 分离配置信息和代码，使得配置管理更加灵活和可维护。
+Deployment 和 Service 的运用：理解了 Deployment 和 Service 的作用，并学会了如何定义和使用它们。
+这次经验让我更深入地了解了 Kubernetes，并获得了一些实用的技能和经验，这对未来的工作将有很大帮助。
 
 ### 6.4 臧佳俊
 
