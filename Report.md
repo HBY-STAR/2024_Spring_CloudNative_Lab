@@ -4,7 +4,7 @@
 
 * 路明畅：部署 mysql、redis
 
-* 梁宇峰：部署 service: user, notification, conference, contribute
+* 梁宇锋：部署 service: user, notification, conference, contribute
 
 * 臧佳俊：部署 service: file, frontend   +  ingress
 
