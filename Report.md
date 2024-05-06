@@ -260,18 +260,18 @@ minikube start --driver=docker --image-mirror-country=cn --kubernetes-version=v1
 
 ### 6.2 路明畅
 
-> 
+> 通过这次lab，我深入理解了Kubernetes中StatefulSet的工作原理及其与无状态部署的Deployment的区别。同时，对Kubernetes的存储解决方案，如PersistentVolumes有了实际操作的体验。整体来说，本次lab不仅提高了我的实操能力，也加深了对Kubernetes作为容器编排工具强大功能的理解。
 
 ### 6.3 梁宇锋
 
 > 通过完成部署四个服务的工作，我学到了如何使用 Kubernetes 进行容器化应用部署。关键的收获包括：
-
-命名空间的利用：命名空间有助于管理和隔离不同的项目，提高了资源管理的清晰度。
-配置管理的灵活性：使用 ConfigMap 分离配置信息和代码，使得配置管理更加灵活和可维护。
-Deployment 和 Service 的运用：理解了 Deployment 和 Service 的作用，并学会了如何定义和使用它们。
-这次经验让我更深入地了解了 Kubernetes，并获得了一些实用的技能和经验，这对未来的工作将有很大帮助。
+>
+> 1. 命名空间的利用：命名空间有助于管理和隔离不同的项目，提高了资源管理的清晰度。
+> 2. 配置管理的灵活性：使用 ConfigMap 分离配置信息和代码，使得配置管理更加灵活和可维护。
+> 3. Deployment 和 Service 的运用：理解了 Deployment 和 Service 的作用，并学会了如何定义和使用它们。
+> 4. 这次经验让我更深入地了解了 Kubernetes，并获得了一些实用的技能和经验，这对未来的工作将有很大帮助。
 
 ### 6.4 臧佳俊
 
-> 
+> 通过本次实验，了解了ingress的运行机制，当外部请求到达集群的 Ingress 控制器时，控制器根据 Ingress 资源中定义的路径、主机名等信息，将请求转发到相应的服务。使得一个入口点可以管理多个服务的外部访问流量，无需为每个服务都配置独立的路由规则，并且可以通过配置Ingress资源来定义不同的路由规则以满足需求。
 
