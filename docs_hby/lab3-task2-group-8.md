@@ -2,7 +2,7 @@
 
 ## 1. 拆分为微服务
 
-* 如何拆分？
+* 拆分依据
 
 > lab3-task1-group-8
 > 4.1 问题一
@@ -10,9 +10,9 @@
 > 然而实际上，问题管理是相对独立的一个服务，其与考试管理并不严格绑定。
 > 此外，为了解耦，应将文件管理服务拆分到考试服务和用户服务中。
 > 考虑到考试执行和考试管理相对也是独立的，因此考试服务也应该拆分为考试管理和考试执行两个微服务。
-> 因此，我认为应该拆分为用户管理、考试管理、考试执行、问题管理四个微服务。
+> 因此，我们认为应该拆分为用户管理、考试管理、考试执行、问题管理四个微服务。
 
-* 将原有的单体应用拆分为3个微服务，包括：
+* 由上述拆分依据，将原有的单体应用拆分为4个微服务，包括：
   * 用户管理
   * 考试管理
   * 考试执行
@@ -25,17 +25,19 @@
 
 ### 1.2 考试管理
 
-* `exam_manage_service`: 考试管理服务负责考试的创建、更新、展示等操作
+* `exam_manage_service`: 考试管理服务负责考试的创建、更新、展示等操作。
 
 ### 1.3 考试执行
 
-* `exam_execute_service`: 考试执行服务负责考试的参加、判分、记录查看等操作
+* `exam_execute_service`: 考试执行服务负责考试的参加、判分、记录查看等操作。
 
 ### 1.4 问题管理
 
-* `question_manage_service`: 问题管理服务负责问题的创建、更新、展示和回答
+* `question_manage_service`: 问题管理服务负责问题的创建、更新、展示和回答。
 
 ## 2. 实现服务间通信
+
+* 技术栈：Kubernetes,  Dubbo
 
 * 使用基于容器云的微服务架构，服务部署在容器中，使用Kubernetes进行管理。
 * 使用同步的基于RPC的通讯，使⽤Dubbo作为RPC框架。
@@ -56,6 +58,7 @@ public class ExamManageServiceImpl {
 
 ## 3. 实现服务注册与发现
 
+* 技术栈：Kubernetes
 * Kubernetes 使用 DNS 作为服务注册表。每个 Kubernetes 服务都会自动注册到集群DNS（CoreDNS）之中。
 * 通过对集群DNS的查询来实现服务发现。
 
@@ -81,130 +84,132 @@ flowchart TD
 ### 4.1 用户管理服务
 
 ```mermaid
-classDiagram
-    class User {
-        user_id
-        user_username
-        user_nickname
-        user_password
-        user_role_id
-        user_avatar
-        user_description
-        user_email
-        user_phone
-        create_time
-        update_time
+erDiagram
+    User {
+        int user_id
+        string user_username
+        string user_nickname
+        string user_password
+        int user_role_id
+        string user_avatar
+        string user_description
+        string user_email
+        string user_phone
+        TIMESTAMP create_time
+        TIMESTAMP update_time
     }
-    class Role{
-    	role_id
-    	role_name
-    	role_description
-    	role_detail
-    	role_page_ids
+    Role {
+        int role_id
+        string role_name
+        string role_description
+        string role_detail
+        string role_page_ids
     }
-    class Page{
-        page_id
-        page_name
-        page_description
-        action_ids
+    Page {
+        int page_id
+        string page_name
+        string page_description
+        string action_ids
     }
-    class Action{
-        action_id
-        action_name
-        action_description
-        default_check
+    Action {
+        int action_id
+        string action_name
+        string action_description
+        bool default_check
     }
 ```
 
 ### 4.2 考试管理服务
 
 ```mermaid
-classDiagram
-    class Exam {
-        exam_id
-        exam_name
-        exam_avatar
-        exam_description
-        exam_question_ids
-        exam_question_ids_radio
-        exam_question_ids_check
-        exam_question_ids_judge
-        exam_score
-        exam_score_radio
-        exam_score_check
-        exam_score_judge
-        exam_creator_id
-        exam_time_limit
-        exam_start_date
-        exam_end_date
-        create_time
-        update_time
-        }
+erDiagram
+    Exam {
+        int exam_id
+        string exam_name
+        string exam_avatar
+        string exam_description
+        string exam_question_ids
+        string exam_question_ids_radio
+        string exam_question_ids_check
+        string exam_question_ids_judge
+        int exam_score
+        int exam_score_radio
+        int exam_score_check
+        int exam_score_judge
+        int exam_creator_id
+        int exam_time_limit
+        TIMESTAMP exam_start_date
+        TIMESTAMP exam_end_date
+        TIMESTAMP create_time
+        TIMESTAMP update_time
+    }
 ```
 
 ### 4.3 考试执行服务
 
 ```mermaid
-classDiagram
-  class ExamRecord {
-    exam_record_id
-    exam_joiner_id
-    exam_join_date
-    exam_time_cost
-    exam_join_score
-    exam_result_level
+erDiagram
+  ExamRecord {
+    int exam_record_id
+    int exam_id
+    int exam_joiner_id
+    TIMESTAMP exam_join_date
+    int exam_time_cost
+    int exam_join_score
+    int exam_result_level
+    string answer_option_ids
   }
 
-  class ExamRecordLevel {
-    exam_record_level_id
-    exam_record_level_name
-    exam_record_level_description
+  ExamRecordLevel {
+    int exam_record_level_id
+    string exam_record_level_name
+    string exam_record_level_description
   }
 ```
 
 ### 4.4 问题管理服务
 
 ```mermaid
-classDiagram
-    class Question {
-        question_id
-        question_name
-        question_score
-        question_creator_id
-        question_level_id
-        question_type_id
-        question_category_id
-        question_description
-        question_option_ids
-        question_answer_option_ids
-        create_time
-        update_time
-  }
-  class QuestionOption {
-    question_option_id
-    question_option_content
-    question_option_description 
+erDiagram
+    Question {
+        int question_id
+        string question_name
+        int question_score
+        int question_creator_id
+        int question_level_id
+        int question_type_id
+        int question_category_id
+        string question_description
+        string question_option_ids
+        string question_answer_option_ids
+        TIMESTAMP create_time
+        TIMESTAMP update_time
     }
-  class QuestionCategory {
-    question_category_id
-    question_category_name
-    question_category_description
-  }
-  class QuestionLevel {
-    question_level_id
-    question_level_name
-    question_level_description
-  }
-  class QuestionType {
-    question_type_id
-    question_type_name
-    question_type_description
-  }
+    QuestionOption {
+        int question_option_id
+        string question_option_content
+        string question_option_description
+    }
+    QuestionCategory {
+        int question_category_id
+        string question_category_name
+        string question_category_description
+    }
+    QuestionLevel {
+        int question_level_id
+        string question_level_name
+        string question_level_description
+    }
+    QuestionType {
+        int question_type_id
+        string question_type_name
+        string question_type_description
+    }
 ```
 
-### 4.4 分布式存储可能带来的问题
+### 4.5 分布式存储可能带来的问题
 
-* 本次lab计划采用CQRS模式，对于每个服务将读写分离，使用不同的数据库进行存储。
+* 本次lab计划采用 CQRS 模式，对于每个服务将读写分离，使用不同的数据库进行存储。
 * CQRS架构从命令端发布事件到查询端处理事件并更新视图之间存在延迟，查询端视图可能存在滞后，由此可能导致客户端查询时出现不一致。
 * 将命令作为事务进行处理，在接收到命令时首先广播到相关的数据库，在处理命令时所有相关的数据库均不可进行查询。
 * 这样可能会增加查询时的延迟，但可以尽可能保证数据一致性。在查询操作远多于命令的情况下，这种方式是可行的。
@@ -349,7 +354,7 @@ classDiagram
 
 ## 6. 微服务的内部外部接口设计
 
-* 外部接口：利用Kubernetes的Ingress资源，重写路径并将请求转发到对应的服务。外部接口主要用于实现功能。
+* 外部接口：利用Kubernetes的Ingress资源，重写路径并将请求转发到对应的服务。
 * 内部接口：利用Kubernetes的Service资源，使用Dubbo的RPC框架，通过RPC调用服务间的接口。内部接口主要向其他服务提供数据，以及发送事件。
 
 
@@ -429,9 +434,9 @@ flowchart TD
         UserSVC(UserManage service) --> Command1[(命令)]
         UserSVC(UserManage service) --> Query1[(查询)]
         ExamSVC(ExamManage service) --> Command2[(命令)]
-        ExamSVC(ExamManage service) --> Query2[(命令)]
+        ExamSVC(ExamManage service) --> Query2[(查询)]
         ExamExeSVC(ExamExecute service) --> Command4[(命令)]
-        ExamExeSVC(ExamExecute service) --> Query4[(命令)]
+        ExamExeSVC(ExamExecute service) --> Query4[(查询)]
         QuestionSVC(QuestionManage service) --> Command3[(命令)]
         QuestionSVC(QuestionManage service) --> Query3[(查询)] 
     end
@@ -491,7 +496,29 @@ flowchart TD
     end
 ```
 
-* ExamExecute Service 并没有调用其他服务。
+* ExamExecute Service 
+
+```mermaid
+---
+title: 考试评分
+---
+flowchart TD
+    exam_score[考试评分] --> question_detail[获取详细问题和答案]
+    exam_score[考试评分] --> exam_detail[获取考试中的问题id]
+    subgraph ExamExecuteService
+        exam_score  
+    end
+    subgraph QuestionManageService
+        question_detail
+    end
+    subgraph ExamManageService
+        exam_detail
+    end
+```
+
+​    
+
+​    
 
 * QuestionManage Service
 
@@ -525,7 +552,7 @@ flowchart TD
 
 ## 8. 典型用例图
 
-### 8.1 获取考试细节
+### 8.1 获取考试详细信息
 
 ```mermaid
 sequenceDiagram
@@ -574,9 +601,9 @@ sequenceDiagram
     activate Web UI
     Web UI ->> Ingress: 前端发送请求到 Ingress
     Ingress ->> QuestionManage Service: Ingress 转发请求: /api/exam/question/update
+    activate QuestionManage Service
     QuestionManage Service ->> UserManage Service: /api/user/get_role/{id}
     activate UserManage Service
-    activate QuestionManage Service
     UserManage Service -->> Web UI: 若角色无权限
     Web UI -->> User: 前端提示无权限
     UserManage Service -->> QuestionManage Service: 若角色有权限
@@ -588,3 +615,37 @@ sequenceDiagram
     deactivate Web UI
     deactivate User
 ```
+
+### 8.3 考试评分
+
+```mermaid
+sequenceDiagram
+    actor User
+    participant Web UI
+    participant Ingress
+    participant ExamExecute Service
+    participant ExamManage Service
+    participant QuestionManage Service
+    
+    User ->> Web UI: 用户访问前端界面
+    activate User
+    activate Web UI
+	Web UI ->> Ingress: 前端发送请求到 Ingress
+	Ingress ->> ExamExecute Service: Ingress 转发请求: /api/exam/finish/{examId}
+	activate ExamExecute Service
+    ExamExecute Service ->> ExamManage Service: /api/exam/get/{id}
+    activate ExamManage Service
+    ExamManage Service -->> ExamExecute Service: 返回问题id列表等数据
+    deactivate ExamManage Service
+    ExamExecute Service ->> QuestionManage Service: /api/exam/question/get/{id}
+    activate QuestionManage Service
+    QuestionManage Service -->> ExamExecute Service: 返回某个问题的详细信息
+    deactivate QuestionManage Service
+    ExamExecute Service ->> ExamExecute Service: 执行评分程序并保存考试记录
+    ExamExecute Service -->> Web UI: 返回考试结果
+    deactivate ExamExecute Service
+    Web UI -->> User: 前端展示考试结果
+    deactivate Web UI
+    deactivate User
+```
+
