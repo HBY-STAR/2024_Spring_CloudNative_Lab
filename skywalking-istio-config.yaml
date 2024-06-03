@@ -1,0 +1,32 @@
+apiVersion: install.istio.io/v1alpha1
+kind: IstioOperator
+metadata:
+  namespace: istio-system
+  name: istiocontrolplane
+spec:
+  meshConfig:
+    defaultProviders:
+      tracing:
+      - "skywalking"
+    enableTracing: true
+    extensionProviders:
+    - name: "skywalking"
+      skywalking:
+        service: tracing.istio-system.svc.cluster.local
+        port: 11800
+---
+apiVersion: v1
+items:
+- apiVersion: telemetry.istio.io/v1alpha1
+  kind: Telemetry
+  metadata:
+    name: mesh-default
+    namespace: istio-system
+  spec:
+    tracing:
+    - randomSamplingPercentage: 100
+      providers:
+      - name: skywalking
+kind: List
+metadata:
+  resourceVersion: ""

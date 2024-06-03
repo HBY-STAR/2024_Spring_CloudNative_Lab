@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ase-notification-service
+  namespace: ravusage
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ase-notification-service
+  template:
+    metadata:
+      labels:
+        app: ase-notification-service
+    spec:
+      containers:
+      - env:
+        - name: ENV
+          value: prod
+        - name: MYSQL_HOST
+          valueFrom:
+            configMapKeyRef:
+              key: MYSQL_HOST
+              name: ravusage-config
+        - name: REDIS_HOST
+          valueFrom:
+            configMapKeyRef:
+              key: REDIS_HOST
+              name: ravusage-config
+        - name: SEATA_HOST
+          valueFrom:
+            configMapKeyRef:
+              key: SEATA_HOST
+              name: ravusage-config
+        image: huajuan6848/ase_notification_service:yys-lab4
+        imagePullPolicy: IfNotPresent
+        name: ase-notification-service
+        resources: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ase-notification-service
+  namespace: ravusage
+spec:
+  ports:
+  - port: 8082
+    protocol: TCP
+    targetPort: 8082
+    name: http
+  selector:
+    app: ase-notification-service
+  type: ClusterIP

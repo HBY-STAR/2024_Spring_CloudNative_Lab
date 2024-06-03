@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ase-file-service
+  namespace: ravusage
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ase-file-service
+  template:
+    metadata:
+      labels:
+        app: ase-file-service
+    spec:
+      containers:
+      - env:
+        - name: ENV
+          value: prod
+        - name: MYSQL_HOST
+          valueFrom:
+            configMapKeyRef:
+              key: MYSQL_HOST
+              name: ravusage-config
+        - name: REDIS_HOST
+          valueFrom:
+            configMapKeyRef:
+              key: REDIS_HOST
+              name: ravusage-config
+        - name: SEATA_HOST
+          valueFrom:
+            configMapKeyRef:
+              key: SEATA_HOST
+              name: ravusage-config
+        image: huajuan6848/ase_file_service:yys-lab4
+        imagePullPolicy: Always
+        name: ase-file-service
+        resources: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ase-file-service
+  namespace: ravusage
+spec:
+  ports:
+  - port: 8086
+    protocol: TCP
+    targetPort: 8086
+    name: http
+  selector:
+    app: ase-file-service
+  type: ClusterIP

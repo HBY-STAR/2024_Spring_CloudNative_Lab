@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ase-user-service
+  namespace: ravusage
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ase-user-service
+  template:
+    metadata:
+      labels:
+        app: ase-user-service
+    spec:
+      containers:
+      - env:
+        - name: ENV
+          value: prod
+        - name: MYSQL_HOST
+          valueFrom:
+            configMapKeyRef:
+              key: MYSQL_HOST
+              name: ravusage-config
+        - name: REDIS_HOST
+          valueFrom:
+            configMapKeyRef:
+              key: REDIS_HOST
+              name: ravusage-config
+        - name: SEATA_HOST
+          valueFrom:
+            configMapKeyRef:
+              key: SEATA_HOST
+              name: ravusage-config
+        image: huajuan6848/ase_user_service:yys-lab4
+        imagePullPolicy: Always
+        name: ase-user-service
+        resources: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ase-user-service
+  namespace: ravusage
+spec:
+  ports:
+  - port: 8081
+    protocol: TCP
+    targetPort: 8081
+    name: http
+  selector:
+    app: ase-user-service
+  type: ClusterIP

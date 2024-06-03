@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ase-review-service
+  namespace: ravusage
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ase-review-service
+  template:
+    metadata:
+      labels:
+        app: ase-review-service
+    spec:
+      containers:
+      - env:
+        - name: ENV
+          value: prod
+        - name: MYSQL_HOST
+          valueFrom:
+            configMapKeyRef:
+              key: MYSQL_HOST
+              name: ravusage-config
+        - name: REDIS_HOST
+          valueFrom:
+            configMapKeyRef:
+              key: REDIS_HOST
+              name: ravusage-config
+        - name: SEATA_HOST
+          valueFrom:
+            configMapKeyRef:
+              key: SEATA_HOST
+              name: ravusage-config
+        image: huajuan6848/ase_review_service:yys-lab4
+        imagePullPolicy: IfNotPresent
+        name: ase-review-service
+        resources: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ase-review-service
+  namespace: ravusage
+spec:
+  ports:
+  - port: 8085
+    protocol: TCP
+    targetPort: 8085
+    name: http
+  selector:
+    app: ase-review-service
+  type: ClusterIP
