@@ -1,1 +1,1 @@
-# 2024_Spring_CloudNative_Lab4
+# 2024 Spring CloudNative Lab4
