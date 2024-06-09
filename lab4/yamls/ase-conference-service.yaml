@@ -4,7 +4,7 @@ metadata:
   name: ase-conference-service
   namespace: ravusage
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: ase-conference-service

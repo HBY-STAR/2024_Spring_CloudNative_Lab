@@ -95,13 +95,63 @@ kubectl logs -n ravusage -l app=ase-user-service
 
 ### 2.2 可观测性
 
-1. 参考lab2中对于负载均衡的测试代码，编写python文件，模拟用户访问服务（访问什么服务，每分钟多少次，运行多长时间）。
+1. 参考lab2中对于负载均衡的测试代码，编写python文件，模拟用户访问服务。
 2. 每次运行后，查看kiali中的各项指标并记录。
 
+* 分工： 一人负责 "/contribute" ，一人负责 "/contribute/listByName/{username}"。
+* 关于模拟用户访问：
+  1. 访问服务的哪个接口
+     1. "/contribute"
+     2. "/contribute/listByName/{username}"
+
+  2. 每秒访问多少次：根据不同值的QPS进行尝试并选出 1 个典型的数字（两人商量）。
+  3. 每次运行多长时间：10s
+
+* 关于记录：
+  1. Overview (注意过滤 ravusage，以及调整 Last 1h 为上次测量的时间， Every 10s固定不变)
+    * 记录overview图片
+    ![img.png](image/overview.png)
+  2. Traffic Graph (注意各个选项保持一致，以及调整 Last 1h 为上次测量的时间， 若中间的图无法展示全部信息，可以鼠标滚轮放大，以及拖拽节点)
+    * 记录traffic graph图片
+    ![img.png](image/traffic_1.png)
+    ![img.png](image/traffic_2.png)
+  3. Workloads(调整 Last 1h 为上次测量的时间， Every 10s固定不变))
+    * 记录类似下面的一张图片
+    ![img.png](image/workloads.png)
+    * 以及对于每个相关的服务，记录类似下面的3张图片
+    ![img.png](image/workloads_per_image.png)
+    ![img.png](image/workloads_per_1.png)
+    ![img.png](image/workloads_per_2.png)
+* 故每个人共需记录 7 张图片。
 
 ### 2.3 流量管理
 
-1. 根据需要修改 replicas ，目前 user 和 contribute 的 replicas 为 2，其他服务为 1。
+1. 根据需要修改 replicas ，目前 frontend 和 file 的 replicas 为 1，其他服务为 2。
 2. 使用VirtualService和DestinationRule来进行请求路由。
 3. 编写 python 文件，模拟用户访问服务（访问什么服务，每分钟多少次，运行多长时间）。
 4. 每次运行后，查看kiali中的流量路由情况并记录。
+
+* 分工： 一人负责 "/contribute"，small flow，一人负责 "/contribute"，large flow。
+* 关于模拟用户访问：
+    1. 访问服务的哪个接口："/contribute"
+    2. 每秒访问多少次：根据不同值的QPS进行尝试并选出 2 个典型的数字（两人商量）。
+       1. small flow
+       2. large flow
+    3. 每次运行多长时间：10s
+
+* 关于记录：
+    1. Overview (注意过滤 ravusage，以及调整 Last 1h 为上次测量的时间， Every 10s固定不变)
+       * 记录overview图片
+         ![img.png](image/overview.png)
+    2. Traffic Graph (注意各个选项保持一致，以及调整 Last 1h 为上次测量的时间， 若中间的图无法展示全部信息，可以鼠标滚轮放大，以及拖拽节点)
+       * 记录traffic graph图片
+         ![img.png](image/traffic_1.png)
+         ![img.png](image/traffic_2.png)
+    3. Workloads(调整 Last 1h 为上次测量的时间， Every 10s固定不变))
+       * 记录类似下面的一张图片
+         ![img.png](image/workloads.png)
+       * 以及对于每个相关的服务，记录类似下面的3张图片
+         ![img.png](image/workloads_per_image.png)
+         ![img.png](image/workloads_per_1.png)
+         ![img.png](image/workloads_per_2.png)
+* 故每个人共需记录 7 张图片。
