@@ -108,21 +108,23 @@ kubectl logs -n ravusage -l app=ase-user-service
   3. 每次运行多长时间：10s
 
 * 关于记录：
-  1. Overview (注意过滤 ravusage，以及调整 Last 1h 为上次测量的时间， Every 10s固定不变)
+  1. Run test
+    * 记录每次运行的时间，以及每次运行的QPS
+    ![img.png](image/run_test.png)
+  2. Overview (注意过滤 ravusage，以及调整 Last 1h 为上次测量的时间， Every 10s固定不变)
     * 记录overview图片
     ![img.png](image/overview.png)
-  2. Traffic Graph (注意各个选项保持一致，以及调整 Last 1h 为上次测量的时间， 若中间的图无法展示全部信息，可以鼠标滚轮放大，以及拖拽节点)
+  3. Traffic Graph (注意各个选项保持一致，以及调整 Last 1h 为上次测量的时间， 若中间的图无法展示全部信息，可以鼠标滚轮放大，以及拖拽节点)
     * 记录traffic graph图片
     ![img.png](image/traffic_1.png)
     ![img.png](image/traffic_2.png)
-  3. Workloads(调整 Last 1h 为上次测量的时间， Every 10s固定不变))
+  4. Workloads(调整 Last 1h 为上次测量的时间， Every 10s固定不变))
     * 记录类似下面的一张图片
     ![img.png](image/workloads.png)
     * 以及对于每个相关的服务，记录类似下面的3张图片
     ![img.png](image/workloads_per_image.png)
     ![img.png](image/workloads_per_1.png)
     ![img.png](image/workloads_per_2.png)
-* 故每个人共需记录 7 张图片。
 
 ### 2.3 流量管理
 
@@ -140,18 +142,20 @@ kubectl logs -n ravusage -l app=ase-user-service
     3. 每次运行多长时间：10s
 
 * 关于记录：
-    1. Overview (注意过滤 ravusage，以及调整 Last 1h 为上次测量的时间， Every 10s固定不变)
+    1. Run test
+       * 记录每次运行的时间，以及每次运行的QPS
+         ![img.png](image/run_test.png)
+    2. Overview (注意过滤 ravusage，以及调整 Last 1h 为上次测量的时间， Every 10s固定不变)
        * 记录overview图片
          ![img.png](image/overview.png)
-    2. Traffic Graph (注意各个选项保持一致，以及调整 Last 1h 为上次测量的时间， 若中间的图无法展示全部信息，可以鼠标滚轮放大，以及拖拽节点)
+    3. Traffic Graph (注意各个选项保持一致，以及调整 Last 1h 为上次测量的时间， 若中间的图无法展示全部信息，可以鼠标滚轮放大，以及拖拽节点)
        * 记录traffic graph图片
          ![img.png](image/traffic_1.png)
          ![img.png](image/traffic_2.png)
-    3. Workloads(调整 Last 1h 为上次测量的时间， Every 10s固定不变))
+    4. Workloads(调整 Last 1h 为上次测量的时间， Every 10s固定不变))
        * 记录类似下面的一张图片
          ![img.png](image/workloads.png)
        * 以及对于每个相关的服务，记录类似下面的3张图片
          ![img.png](image/workloads_per_image.png)
          ![img.png](image/workloads_per_1.png)
          ![img.png](image/workloads_per_2.png)
-* 故每个人共需记录 7 张图片。
