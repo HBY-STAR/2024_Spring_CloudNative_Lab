@@ -58,15 +58,21 @@ spec:
         port:
           number: 8083
   - match:
-    - uri:
-        prefix: /api/contribute
+      - uri:
+          prefix: /api/contribute
     rewrite:
       uri: /contribute
     route:
-    - destination:
-        host: ase-contribute-service
-        port:
-          number: 8084
+      - destination:
+          host: ase-contribute-service
+          port:
+            number: 8084
+        weight: 30
+      - destination:
+          host: ase-contribute-service-v2
+          port:
+            number: 8084
+        weight: 70
   - match:
     - uri:
         prefix: /api/review

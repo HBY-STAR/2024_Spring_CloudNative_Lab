@@ -1,0 +1,20 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: ase-contribute-vs
+  namespace: ravusage
+spec:
+  hosts:
+    - "*" # 注意这里使用服务的 DNS 名称
+  http:
+    - route:
+        - destination:
+            host: ase-contribute-service
+            subset: v1  # 将流量的一部分路由到 v1 版本
+          weight: 80  # 将 80% 的流量路由到 v1 版本
+
+    - route:
+        - destination:
+            host: ase-contribute-service
+            subset: v2  # 将流量的一部分路由到 v2 版本
+          weight: 20  # 将 20% 的流量路由到 v2 版本

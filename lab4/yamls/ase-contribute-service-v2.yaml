@@ -1,17 +1,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ase-contribute-service
+  name: ase-contribute-service-v2
   namespace: ravusage
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: ase-contribute-service
+      app: ase-contribute-service-v2
   template:
     metadata:
       labels:
-        app: ase-contribute-service
+        app: ase-contribute-service-v2
     spec:
       containers:
       - env:
@@ -34,13 +34,13 @@ spec:
               name: ravusage-config
         image: huajuan6848/ase_contribute_service:yys-lab4
         imagePullPolicy: IfNotPresent
-        name: ase-contribute-service
+        name: ase-contribute-service-v2
         resources: {}
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: ase-contribute-service
+  name: ase-contribute-service-v2
   namespace: ravusage
 spec:
   ports:
@@ -49,5 +49,5 @@ spec:
     targetPort: 8084
     name: http
   selector:
-    app: ase-contribute-service
+    app: ase-contribute-service-v2
   type: ClusterIP
