@@ -1,0 +1,41 @@
+imageRepository:
+    userService: huajuan6848/ase_user_service
+    notificationService: huajuan6848/ase_notification_service
+    conferenceService: huajuan6848/ase_conference_service
+    contributeService: huajuan6848/ase_contribute_service
+    fileService: huajuan6848/ase_file_service
+    frontend: huajuan6848/ase_frontend
+
+dockerTag:
+  userService: yys-lab2
+  notificationService: yys-lab2
+  conferenceService: yys-lab2
+  contributeService: yys-lab2
+  fileService: yys-lab2
+  frontend: yys-lab2
+
+replicas:
+  userService: 1
+  notificationService: 1
+  conferenceService: 4
+  contributeService: 1
+  fileService: 1
+  frontend: 1
+
+env: prod
+
+frontEndPort: 80
+
+fileServiceHostNode: minikube
+
+fileServiceHostPath: /mnt/disks/ase_file_upload
+
+mysql:
+  host: mysql.lab2-middlewares.svc.cluster.local
+  port: 3306
+  user: root
+  password: root
+
+redis:
+  host: redis.lab2-middlewares.svc.cluster.local
+  port: 6379

@@ -1,0 +1,69 @@
+version: '3'
+services:
+  ase-conference-service:
+    build:
+      context: .
+      dockerfile: ase_conference_service/Dockerfile
+    networks:
+      - ase-network
+    environment:
+      - env=prod
+  ase-contribute-service:
+    build:
+      context: .
+      dockerfile: ase_contribute_service/Dockerfile
+    networks:
+      - ase-network
+    environment:
+      - env=prod
+  ase-notification-service:
+    build:
+      context: .
+      dockerfile: ase_notification_service/Dockerfile
+    networks:
+      - ase-network
+    environment:
+      - env=prod
+  ase-user-service:
+    build:
+      context: .
+      dockerfile: ase_user_service/Dockerfile
+    networks:
+      - ase-network
+    environment:
+      - env=prod
+  ase-file-service:
+    build:
+      context: .
+      dockerfile: ase_file_service/Dockerfile
+    networks:
+      - ase-network
+    volumes:
+      - file-upload:/root/upload # 映射容器中上传文件的路径到存储卷
+    environment:
+      - env=prod
+  ase-gateway:
+    build:
+      context: .
+      dockerfile: ase_gateway/Dockerfile
+    networks:
+      - ase-network
+    environment:
+      - env=prod
+  ase-frontend:
+    build:
+      context: ./ase_frontend
+      dockerfile: Dockerfile
+    networks:
+      - ase-network
+    ports:
+      - "80:80"
+    depends_on:
+      - ase-gateway
+    volumes:
+      - ./ase_frontend/default.conf:/etc/nginx/nginx.conf
+networks:
+  ase-network:
+    driver: bridge
+volumes:
+  file-upload:

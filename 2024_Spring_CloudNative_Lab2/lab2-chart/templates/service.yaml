@@ -1,0 +1,105 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ase-user-service
+  namespace: lab2-services
+spec:
+  selector:
+    app: ase-user-service
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8081
+      targetPort: 8081
+    - name: rpc
+      protocol: TCP
+      port: 20881
+      targetPort: 20881
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ase-notification-service
+  namespace: lab2-services
+spec:
+  selector:
+    app: ase-notification-service
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8082
+      targetPort: 8082
+    - name: rpc
+      protocol: TCP
+      port: 20882
+      targetPort: 20882
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ase-conference-service
+  namespace: lab2-services
+spec:
+  selector:
+    app: ase-conference-service
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8083
+      targetPort: 8083
+    - name: rpc
+      protocol: TCP
+      port: 20883
+      targetPort: 20883
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ase-contribute-service
+  namespace: lab2-services
+spec:
+  selector:
+    app: ase-contribute-service
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8084
+      targetPort: 8084
+    - name: rpc
+      protocol: TCP
+      port: 20884
+      targetPort: 20884
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ase-file-service
+  namespace: lab2-services
+spec:
+  selector:
+    app: ase-file-service
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8085
+      targetPort: 8085
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ase-frontend
+  namespace: lab2-services
+spec:
+  selector:
+    app: ase-frontend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+

@@ -1,0 +1,159 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ase-user-service
+  namespace: lab2-services
+spec:
+  replicas: {{ .Values.replicas.userService }}
+  selector:
+    matchLabels:
+      app: ase-user-service
+  template:
+    metadata:
+      labels:
+        app: ase-user-service
+    spec:
+      containers:
+        - name: ase-user-service
+          image: {{ .Values.imageRepository.userService}}:{{ .Values.dockerTag.userService }}
+          ports:
+            - containerPort: 8081
+            - containerPort: 20881
+          envFrom:
+            - configMapRef:
+                name: service-config
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ase-notification-service
+  namespace: lab2-services
+spec:
+  replicas: {{ .Values.replicas.notificationService }}
+  selector:
+    matchLabels:
+      app: ase-notification-service
+  template:
+    metadata:
+      labels:
+        app: ase-notification-service
+    spec:
+      containers:
+        - name: ase-notification-service
+          image: {{ .Values.imageRepository.notificationService }}:{{ .Values.dockerTag.notificationService }}
+          ports:
+            - containerPort: 8082
+            - containerPort: 20882
+          envFrom:
+            - configMapRef:
+                name: service-config
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ase-conference-service
+  namespace: lab2-services
+spec:
+  replicas: {{ .Values.replicas.conferenceService }}
+  selector:
+    matchLabels:
+      app: ase-conference-service
+  template:
+    metadata:
+      labels:
+        app: ase-conference-service
+    spec:
+      containers:
+        - name: ase-conference-service
+          image: {{ .Values.imageRepository.conferenceService }}:{{ .Values.dockerTag.conferenceService }}
+          ports:
+            - containerPort: 8083
+            - containerPort: 20883
+          envFrom:
+            - configMapRef:
+                name: service-config
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ase-contribute-service
+  namespace: lab2-services
+spec:
+  replicas: {{ .Values.replicas.contributeService }}
+  selector:
+    matchLabels:
+      app: ase-contribute-service
+  template:
+    metadata:
+      labels:
+        app: ase-contribute-service
+    spec:
+      containers:
+        - name: ase-contribute-service
+          image: {{ .Values.imageRepository.contributeService }}:{{ .Values.dockerTag.contributeService }}
+          ports:
+            - containerPort: 8084
+            - containerPort: 20884
+          envFrom:
+            - configMapRef:
+                name: service-config
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ase-file-service
+  namespace: lab2-services
+spec:
+  replicas: {{ .Values.replicas.fileService }}
+  selector:
+    matchLabels:
+      app: ase-file-service
+  template:
+    metadata:
+      labels:
+        app: ase-file-service
+    spec:
+      containers:
+        - name: ase-file-service
+          image: {{ .Values.imageRepository.fileService }}:{{ .Values.dockerTag.fileService }}
+          ports:
+            - containerPort: 8085
+          volumeMounts:
+            - name: upload-data
+              mountPath: /root/upload
+          envFrom:
+            - configMapRef:
+                name: service-config
+      volumes:
+        - name: upload-data
+          hostPath:
+            path: {{ .Values.fileServiceHostPath }}
+      nodeSelector:
+        kubernetes.io/hostname: {{ .Values.fileServiceHostNode }}
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ase-frontend
+  namespace: lab2-services
+spec:
+  replicas: {{ .Values.replicas.frontend }}
+  selector:
+    matchLabels:
+      app: ase-frontend
+  template:
+    metadata:
+      labels:
+        app: ase-frontend
+    spec:
+      containers:
+        - name: ase-frontend
+          image: {{ .Values.imageRepository.frontend }}:{{ .Values.dockerTag.frontend }}
+          ports:
+            - containerPort: {{ .Values.frontEndPort }}
