@@ -1,0 +1,100 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: ase-gateway
+  namespace: ravusage
+spec:
+  # The selector matches the ingress gateway pod labels.
+  # If you installed Istio using Helm following the standard documentation, this would be "istio=ingress"
+  selector:
+    istio: ingressgateway # use istio default controller
+  servers:
+  - port:
+      number: 8080
+      name: http
+      protocol: HTTP
+    hosts:
+    - "*"
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: ase
+  namespace: ravusage
+spec:
+  gateways:
+  - ase-gateway
+  hosts:
+  - "*"
+  http:
+  - match:
+    - uri:
+        prefix: /api/user
+    rewrite:
+      uri: /user
+    route:
+    - destination:
+        host: ase-user-service
+        port:
+          number: 8081
+  - match:
+    - uri:
+        prefix: /api/notification
+    rewrite:
+      uri: /notification
+    route:
+    - destination:
+        host: ase-notification-service
+        port:
+          number: 8082
+  - match:
+    - uri:
+        prefix: /api/conference
+    rewrite:
+      uri: /conference
+    route:
+    - destination:
+        host: ase-conference-service
+        port:
+          number: 8083
+  - match:
+      - uri:
+          prefix: /api/contribute
+    rewrite:
+      uri: /contribute
+    route:
+      - destination:
+          host: ase-contribute-service
+          port:
+            number: 8084
+        weight: 30
+      - destination:
+          host: ase-contribute-service-v2
+          port:
+            number: 8084
+        weight: 70
+  - match:
+    - uri:
+        prefix: /api/review
+    rewrite:
+      uri: /review
+    route:
+    - destination:
+        host: ase-review-service
+        port:
+          number: 8085
+  - match:
+    - uri:
+        prefix: /api/file
+    rewrite:
+      uri: /file
+    route:
+    - destination:
+        host: ase-file-service
+        port:
+          number: 8086
+  - route:
+    - destination:
+        host: ase-ui
+        port:
+          number: 10000

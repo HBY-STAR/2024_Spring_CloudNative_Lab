@@ -1,0 +1,16 @@
+version: '3'
+services:
+  seata:
+    image: seataio/seata-server:1.7.1-slim
+    ports:
+      - "7091:7091"
+      - "8091:8091"
+    restart: always
+    volumes:
+      - ./application.yml:/seata-server/resources/application.yml
+      - seata-data:/seata-server/sessionStore
+    environment:
+      - SEATA_PORT=8091
+      - STORE_MODE=file
+volumes:
+  seata-data:
